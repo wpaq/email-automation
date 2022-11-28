@@ -1,38 +1,27 @@
 require('dotenv').config()
 
-const fs = require('fs')
-const path = require('path')
+const nodemailer = require('nodemailer');
 
-const nodemailer = require("nodemailer");
-const mailGun = require('nodemailer-mailgun-transport');
-const handlebars = require('handlebars');
-
-const auth = {
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
   auth: {
-    api_key: process.env.MAILGUN_APIKEY,
-    domain: process.env.MAILGUN_DOMAIN
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASSWORD
   }
-}
-const nodemailerMailgun = nodemailer.createTransport(mailGun(auth));
+});
 
-const filePath = path.join(__dirname + '/views/index.html');
-const source = fs.readFileSync(filePath, 'utf-8').toString();
-const template = handlebars.compile(source);
-const replacements = {
-  username: "Wallyson Pablo"
-};
-const htmlToSend = template(replacements);
-
-var mailOptions = {
-  from: 'wallysonpabloo@gmail.com',
-  to: 'wallysonpabloo@gmail.com, ',
-  subject: 'Teste email witg HTML',
-  html: htmlToSend
+const mailOptions = {
+  from: 'wpaqdev@gmail.com',
+  to: 'wpaqdev@gmail.com',
+  subject: 'Subject',
+  text: 'Teste de Email'
 };
 
-nodemailerMailgun.sendMail(mailOptions, function (error, response) {
+transporter.sendMail(mailOptions, function (error, info) {
   if (error) {
     console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
   }
-  console.log(response)
 });
