@@ -4,7 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon src/server.js --ignore public"
+    "start": "node src/server.js --ignore public",
+    "test": "jest --colors --noStackTrace --passWithNoTests --runInBand --detectOpenHandles",
+    "test:unit": "npm test -- --watch -c jest-unit-config.js",
+    "dev": "nodemon src/server.js --ignore public"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +27,7 @@
   "devDependencies": {
     "git-commit-msg-linter": "^4.4.0",
     "husky": "^8.0.2",
+    "jest": "^29.3.1",
     "lint-staged": "^13.0.4",
     "nodemon": "^2.0.20",
     "standard": "^17.0.0",
