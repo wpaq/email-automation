@@ -4,7 +4,7 @@ import EmailService from '../services/email.service'
 dotenv.config()
 
 class EmailController {
-  async send (req, res) {
+  async send(req, res) {
     try {
       const { name, mail } = req.body
 
@@ -21,6 +21,7 @@ class EmailController {
       }
 
       await EmailService.sendEmail(name, mail)
+
       return res.status(200).json({
         message: 'Mail sent!'
       })

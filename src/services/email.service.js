@@ -6,7 +6,7 @@ import hbs from 'nodemailer-express-handlebars'
 dotenv.config()
 
 class EmailService {
-  async sendEmail (name, mail) {
+  async sendEmail(name, mail) {
     try {
       const transporter = nodemailer.createTransport({
         service: process.env.MAIL_SERVICE,
