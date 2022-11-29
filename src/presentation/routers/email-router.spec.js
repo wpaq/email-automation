@@ -1,5 +1,11 @@
 class EmailRouter {
   route(httpRequest) {
+    if (!httpRequest) {
+      return {
+        statusCode: 500
+      }
+    }
+
     const { email, name } = httpRequest.body
     if (!email || !name) {
       return {
@@ -30,5 +36,11 @@ describe('Email Router', () => {
     }
     const httpResponse = sut.route(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
+  })
+
+  test('Should return 500 if no httpRequest is provided', () => {
+    const sut = new EmailRouter()
+    const httpResponse = sut.route()
+    expect(httpResponse.statusCode).toBe(500)
   })
 })
