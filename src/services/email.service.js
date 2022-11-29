@@ -6,7 +6,7 @@ import hbs from 'nodemailer-express-handlebars'
 dotenv.config()
 
 class EmailService {
-  async sendEmail (to, name) {
+  async sendEmail (name, mail) {
     try {
       const transporter = nodemailer.createTransport({
         service: process.env.MAIL_SERVICE,
@@ -31,12 +31,12 @@ class EmailService {
 
       const mailOptions = {
         from: process.env.MAIL_USER,
-        to,
-        subject: 'Thanks for subscriber',
+        to: mail,
+        subject: 'Thanks for subscribe',
         template: 'default',
         context: {
           name,
-          to
+          to: mail
         },
         attachments: [{
           filename: 'image-1.png',

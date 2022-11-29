@@ -6,17 +6,23 @@ dotenv.config()
 class EmailController {
   async send (req, res) {
     try {
-      const { to, name } = req.body
+      const { name, mail } = req.body
 
-      if (!to) {
+      if (!name) {
         return res.status(400).json({
-          message: 'email required'
+          message: 'Name is required'
         })
       }
 
-      await EmailService.sendEmail(to, name)
+      if (!mail) {
+        return res.status(400).json({
+          message: 'Email is required'
+        })
+      }
+
+      await EmailService.sendEmail(name, mail)
       return res.status(200).json({
-        message: 'Mail Sent'
+        message: 'Mail sent!'
       })
     } catch (err) {
       return res.status(500).json({

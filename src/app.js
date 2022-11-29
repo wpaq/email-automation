@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 
 import cors from 'cors'
 import helmet from 'helmet'
+import bodyParser from 'body-parser'
 import express from 'express'
 import routes from './routes'
 dotenv.config()
@@ -16,6 +17,7 @@ class App {
   middlewares () {
     this.app.use(cors())
     this.app.use(helmet())
+    this.app.use(bodyParser.json())
 
     this.app.use(express.urlencoded({ extended: true }))
     this.app.use(express.json())
