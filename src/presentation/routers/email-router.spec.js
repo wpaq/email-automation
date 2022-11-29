@@ -2,9 +2,13 @@ const HttpResponse = require('../helpers/http-response')
 const EmailRouter = require('./email-router')
 const MissingParamError = require('../helpers/missing-param-error')
 
+const makeSut = () => {
+  return new EmailRouter()
+}
+
 describe('Email Router', () => {
   test('Should return 400 if no email is provided', () => {
-    const sut = new EmailRouter()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name'
@@ -15,7 +19,7 @@ describe('Email Router', () => {
   })
 
   test('Should return 400 if no name is provided', () => {
-    const sut = new EmailRouter()
+    const sut = makeSut()
     const httpRequest = {
       body: {
         email: 'any_email@mail.com'
@@ -26,13 +30,13 @@ describe('Email Router', () => {
   })
 
   test('Should return 500 if no httpRequest is provided', () => {
-    const sut = new EmailRouter()
+    const sut = makeSut()
     const httpResponse = sut.route()
     expect(httpResponse.statusCode).toBe(500)
   })
 
   test('Should return 500 if httpRequest has no body', () => {
-    const sut = new EmailRouter()
+    const sut = makeSut()
     const httpResponse = sut.route({})
     expect(httpResponse.statusCode).toBe(500)
   })
