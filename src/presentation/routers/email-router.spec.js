@@ -1,41 +1,6 @@
-class EmailRouter {
-  route(httpRequest) {
-    if (!httpRequest || !httpRequest.body) {
-      return HttpResponse.serverError()
-    }
-
-    const { email, name } = httpRequest.body
-    if (!email) {
-      return HttpResponse.badRequest('email')
-    }
-    if (!name) {
-      return HttpResponse.badRequest('name')
-    }
-  }
-}
-
-class HttpResponse {
-  static badRequest(paramName) {
-    return {
-      statusCode: 400,
-      body: new MissingParamError(paramName)
-    }
-  }
-
-  static serverError() {
-    return {
-      statusCode: 500
-    }
-  }
-}
-
-class MissingParamError extends Error {
-  constructor(paramName) {
-    super(`Missing param: ${paramName}`)
-    this.name = 'MissingParamError'
-  }
-}
-
+const HttpResponse = require('../helpers/http-response')
+const EmailRouter = require('./email-router')
+const MissingParamError = require('../helpers/missing-param-error')
 
 describe('Email Router', () => {
   test('Should return 400 if no email is provided', () => {
