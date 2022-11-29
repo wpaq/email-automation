@@ -26,9 +26,11 @@ class App {
   }
 
   routes() {
-    this.app.use('/email', emailRoutes);
+    this.app.use('/email/', emailRoutes);
     this.app.use('*', function (req, res) {
-      res.render('404', { title: '404' });
+      res.status(404).json({
+        message: 'page not found'
+      });
     });
   }
 }

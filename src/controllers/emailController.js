@@ -8,7 +8,13 @@ import hbs from 'nodemailer-express-handlebars'
 class EmailController {
   async send(req, res) {
     try {
-      const { to } = req.body
+      if (!req.body) {
+        return res.status(400).json({
+          message: 'informe seu email'
+        })
+      }
+
+      const { to, name } = req.body
 
       const transporter = nodemailer.createTransport({
         service: process.env.MAIL_SERVICE,
@@ -23,7 +29,7 @@ class EmailController {
       const handlebarOptions = {
         viewEngine: {
           extName: ".handlebars",
-          partialsDir: path.resolve('./views'),
+          partialsDir: path.resolve('./src/views'),
           defaultLayout: false,
         },
         viewPath: path.resolve('./src/views/emails/default'),
@@ -38,25 +44,26 @@ class EmailController {
         subject: 'Sending Email using Node.js',
         template: 'index',
         context: {
-          title: 'Title Here',
-          text: "Lorem ipsum dolor sit amet, consectetur..."
+          name: name,
+          to: to
         },
         attachments: [{
           filename: 'image-1.png',
-          path: __dirname + '/views/emails/default/images/image-1.png',
+          path: './src/views/emails/default/images/image-1.png',
           cid: 'image-1' //my mistake was putting "cid:logo@cid" here! 
         }, {
           filename: 'image-2.png',
-          path: __dirname + '/views/emails/default/images/image-2.png',
+          path: './src/views/emails/default/images/image-2.png',
           cid: 'image-2' //my mistake was putting "cid:logo@cid" here! 
         }]
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
+        const infoResponse = info.response
         if (error) {
           console.log(error);
         } else {
-          res.status(200).send({ message: 'Email sent', info })
+          res.status(200).send({ message: 'Email sent', infoResponse })
         }
       });
     } catch (err) {
