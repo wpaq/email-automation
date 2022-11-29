@@ -8,13 +8,13 @@ import hbs from 'nodemailer-express-handlebars'
 class EmailController {
   async send(req, res) {
     try {
-      if (!req.body) {
+      const { to, name } = req.body
+
+      if (!to) {
         return res.status(400).json({
           message: 'informe seu email'
         })
       }
-
-      const { to, name } = req.body
 
       const transporter = nodemailer.createTransport({
         service: process.env.MAIL_SERVICE,
