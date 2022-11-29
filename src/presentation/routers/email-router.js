@@ -1,6 +1,10 @@
 const HttpResponse = require('../helpers/http-response')
 
 module.exports = class EmailRouter {
+  constructor(emailUseCaseSpy) {
+    this.emailUseCaseSpy = emailUseCaseSpy
+  }
+
   route(httpRequest) {
     if (!httpRequest || !httpRequest.body) {
       return HttpResponse.serverError()
@@ -13,5 +17,7 @@ module.exports = class EmailRouter {
     if (!name) {
       return HttpResponse.badRequest('name')
     }
+
+    this.emailUseCaseSpy.send(email, name)
   }
 }
