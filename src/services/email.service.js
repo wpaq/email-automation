@@ -41,15 +41,15 @@ class EmailService {
         attachments: [{
           filename: 'image-1.png',
           path: './src/views/emails/default/images/image-1.png',
-          cid: 'image-1' // my mistake was putting "cid:logo@cid" here!
+          cid: 'image-1'
         }, {
           filename: 'image-2.png',
           path: './src/views/emails/default/images/image-2.png',
-          cid: 'image-2' // my mistake was putting "cid:logo@cid" here!
+          cid: 'image-2'
         }]
       }
 
-      transporter.sendMail(mailOptions, function (error, info) {
+      transporter.sendMail(mailOptions, function (error) {
         if (error) {
           return console.log(error)
         }

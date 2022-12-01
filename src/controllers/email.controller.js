@@ -27,7 +27,7 @@ class EmailController {
       })
     } catch (err) {
       return res.status(500).json({
-        message: err
+        error: err
       })
     }
   }
