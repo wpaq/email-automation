@@ -1,11 +1,11 @@
 import 'dotenv/config'
 
 const NodemailerConfig = {
-  service: process.env.MAIL_SERVICE,
-  host: process.env.MAIL_HOST,
+  service: process.env.SMTP_NAME,
+  host: process.env.SMTP_HOST,
   auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
+    user: process.env.SMTP_USERNAME,
+    pass: process.env.SMTP_PASSWORD
   },
   secure: true
 }

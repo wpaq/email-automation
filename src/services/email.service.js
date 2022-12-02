@@ -1,27 +1,15 @@
-import path from 'path'
 import nodemailer from 'nodemailer'
 import hbs from 'nodemailer-express-handlebars'
 
 import NodemailerConfig from '../configs/nodemailer.config'
+import HandlebarConfig from '../configs/handlebars.config'
 
 class EmailService {
   async sendEmail(name, mail) {
     try {
       const transporter = nodemailer.createTransport(NodemailerConfig)
-
-      const handlebarOptions = {
-        viewEngine: {
-          extName: '.handlebars',
-          partialsDir: path.resolve('./src/views'),
-          defaultLayout: false
-        },
-        viewPath: path.resolve('./src/views/emails/default'),
-        extName: '.handlebars'
-      }
-      transporter.use('compile', hbs(handlebarOptions))
-
       const mailOptions = {
-        from: process.env.MAIL_USER,
+        from: process.env.SMTP_USER,
         to: mail,
         subject: 'Thanks for subscribe',
         template: 'default',
@@ -40,6 +28,7 @@ class EmailService {
         }]
       }
 
+      transporter.use('compile', hbs(HandlebarConfig))
       transporter.sendMail(mailOptions, function (error) {
         if (error) {
           return console.log(error)
