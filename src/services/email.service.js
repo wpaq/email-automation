@@ -29,11 +29,7 @@ class EmailService {
       }
 
       transporter.use('compile', hbs(HandlebarConfig))
-      transporter.sendMail(mailOptions, function (error) {
-        if (error) {
-          return console.log(error)
-        }
-      })
+      transporter.sendMail(mailOptions)
     } catch (err) {
       return console.log(err)
     }
