@@ -6,8 +6,7 @@ const NodemailerConfig = {
   auth: {
     user: process.env.SMTP_USERNAME,
     pass: process.env.SMTP_PASSWORD
-  },
-  secure: true
+  }
 }
 
 export default NodemailerConfig
