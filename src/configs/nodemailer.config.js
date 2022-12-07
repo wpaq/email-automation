@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-const NodemailerConfig = {
+const nodemailerConfig = {
   service: process.env.SMTP_NAME,
   host: process.env.SMTP_HOST,
   auth: {
@@ -9,4 +9,4 @@ const NodemailerConfig = {
   }
 }
 
-export default NodemailerConfig
+export default nodemailerConfig

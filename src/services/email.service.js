@@ -1,21 +1,29 @@
 import nodemailer from 'nodemailer'
 import hbs from 'nodemailer-express-handlebars'
+import { MissingParamError } from "../utils/errors/index";
 
-import NodemailerConfig from '../configs/nodemailer.config'
-import HandlebarConfig from '../configs/handlebars.config'
+import nodemailerConfig from '../configs/nodemailer.config'
+import handlebarConfig from '../configs/handlebars.config'
 
 class EmailService {
-  async sendEmail(name, mail) {
+  async sendEmail(receiverName, receiverEmail) {
     try {
-      const transporter = nodemailer.createTransport(NodemailerConfig)
+      if (!receiverName) {
+        throw new MissingParamError('receiverName')
+      }
+      if (!receiverEmail) {
+        throw new MissingParamError('receiverEmail')
+      }
+
+      const transporter = nodemailer.createTransport(nodemailerConfig)
       const mailOptions = {
         from: process.env.SMTP_USER,
-        to: mail,
+        to: receiverEmail,
         subject: 'Thanks for subscribe',
         template: 'default',
         context: {
-          name,
-          to: mail
+          name: receiverName,
+          to: receiverEmail
         },
         attachments: [{
           filename: 'image-1.png',
@@ -28,7 +36,7 @@ class EmailService {
         }]
       }
 
-      transporter.use('compile', hbs(HandlebarConfig))
+      transporter.use('compile', hbs(handlebarConfig))
       transporter.sendMail(mailOptions)
     } catch (err) {
       return console.log(err)

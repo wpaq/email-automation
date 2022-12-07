@@ -1,6 +1,6 @@
 import path from 'path'
 
-const HandlebarConfig = {
+const handlebarConfig = {
   viewEngine: {
     extName: '.handlebars',
     partialsDir: path.resolve('./src/views'),
@@ -10,4 +10,4 @@ const HandlebarConfig = {
   extName: '.handlebars'
 }
 
-export default HandlebarConfig
+export default handlebarConfig
